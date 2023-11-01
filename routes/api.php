@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AnimalsController;
+use App\Http\Controllers\StudentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,3 +40,10 @@ Route::put('/animals/{id}/{request}', [AnimalsController::class,'update']);//sin
 //     echo("menghapus data $id");
 // });
 Route::delete('/animals/{id}',[AnimalsController::class,'destroy']);
+
+
+// minggu ke 5
+Route::get('/student', [StudentController::class, 'index']);
+Route::post('/student', [StudentController::class, 'store']);
+Route::put('/student/{id}/{request}', [StudentController::class,'update']);
+Route::delete('/student/{id}',[StudentController::class,'destroy']);
