@@ -45,5 +45,6 @@ Route::delete('/animals/{id}',[AnimalsController::class,'destroy']);
 // minggu ke 5
 Route::get('/student', [StudentController::class, 'index']);
 Route::post('/student', [StudentController::class, 'store']);
-Route::put('/student/{id}/{request}', [StudentController::class,'update']);
+Route::put('/student/{id}', [StudentController::class,'update']);
 Route::delete('/student/{id}',[StudentController::class,'destroy']);
+Route::get('/students/{id}', [StudentController::class, 'show']);

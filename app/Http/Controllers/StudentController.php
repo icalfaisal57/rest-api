@@ -36,20 +36,21 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
-        $input = [
-            'nama'=>$request->nama,
-            'nim'=>$request->nim,
-            'email'=>$request->email,
-            'jurusan'=>$request->jurusan,
-        ];
+        // $input = [
+        //     'nama'=>$request->nama,
+        //     'nim'=>$request->nim,
+        //     'email'=>$request->email,
+        //     'jurusan'=>$request->jurusan,
+        // ];
         #menggunakan model student untuk insert data
-        $student = Student::create($input);
-        $data = [
-            'message' => 'student is created succesfully',
-            'data' => $student,
-        ];
-        //mengembalikan data json dan kode 201
-        return response()->json($data,201);
+        $student = Student::create($request->all());
+
+		$result = [
+			'message' => 'Data Student Berhasil Dibuat',
+			'data' => $student,
+		];
+
+		return response()->json($result, 201);
     }   
 
     /**
@@ -57,7 +58,24 @@ class StudentController extends Controller
      */
     public function show(string $id)
     {
-        //
+        {
+            $student = Student::find($id);
+    
+            if ($student) {
+                $response = [
+                    'message' => 'Get detail student',
+                    'data' => $student
+                ];
+        
+                return response()->json($response, 200);
+            } else {
+                $response = [
+                    'message' => 'Data not found'
+                ];
+                
+                return response()->json($response, 404);
+            }
+        }
     }
 
     /**
@@ -73,7 +91,22 @@ class StudentController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $student = Student::find($id);
+        $student->update($request->all());
+		if ($student) {
+			$data = [
+				'message' => 'Student is updated',
+				'data' => $student
+			];
+	
+			return response()->json($data, 200);
+		} else {
+			$response = [
+				'message' => 'Data not found'
+			];
+
+			return response()->json($response, 404);
+		}
     }
 
     /**
@@ -81,6 +114,23 @@ class StudentController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        //mencari menggunakan method find lalu melakukan pengkondisian dengan if jika data tersebut ada
+        // atau tidak ada lalu disimpan dalam variabel
+        $student = Student::find($id);
+        $student->delete();
+		if ($student) {
+			$response = [
+				'message' => 'Student is delete',
+				'data' => $student
+			];
+
+			return response()->json($response, 200); 
+		} else {
+			$response = [
+				'message' => 'Data not found'
+			];
+
+			return response()->json($response, 404);
+		}
     }
 }
