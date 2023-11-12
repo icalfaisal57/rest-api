@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Student;
+use App\Http\Requests\StudentRequest;
 class StudentController extends Controller
 {
     /**
@@ -30,11 +31,25 @@ class StudentController extends Controller
     {
         //
     }
+    public function sort(Request $request)
+    {
+        $input = [
+            'sort' => $request
+        ];
+
+        $students = Student::orderBy("")->get();
+        $data=[
+            'message'=> 'get students',
+            'data'=> $students        
+        ];
+        return response()->json($data, 201);
+        // view('data.index', compact('filteredData'));
+    }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StudentRequest $request)
     {
         // $input = [
         //     'nama'=>$request->nama,
@@ -43,6 +58,8 @@ class StudentController extends Controller
         //     'jurusan'=>$request->jurusan,
         // ];
         #menggunakan model student untuk insert data
+            // dd($request->all());
+
         $student = Student::create($request->all());
 
 		$result = [
@@ -51,6 +68,8 @@ class StudentController extends Controller
 		];
 
 		return response()->json($result, 201);
+        //saat validasi ketika memasukan data yang tidak sesuai validasi saat di postman otomatis akan kembali ke homepage / jika di dokumentasi 
+        //laravel akan kembali ke halaman sebelumnya yaitu halaman homepage laravel, karena itu saya memvalidasi dan menulis eror message di student request
     }   
 
     /**

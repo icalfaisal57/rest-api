@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AnimalsController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\StudentController;
 
 /*
@@ -43,8 +44,13 @@ Route::delete('/animals/{id}',[AnimalsController::class,'destroy']);
 
 
 // minggu ke 5
-Route::get('/student', [StudentController::class, 'index']);
-Route::post('/student', [StudentController::class, 'store']);
-Route::put('/student/{id}', [StudentController::class,'update']);
-Route::delete('/student/{id}',[StudentController::class,'destroy']);
-Route::get('/students/{id}', [StudentController::class, 'show']);
+Route::get('/students', [StudentController::class, 'index'])->middleware('auth:sanctum');
+Route::post('/students', [StudentController::class, 'store'])->middleware('auth:sanctum');
+Route::put('/students/{id}', [StudentController::class,'update'])->middleware('auth:sanctum');
+Route::delete('/students/{id}',[StudentController::class,'destroy'])->middleware('auth:sanctum');
+Route::get('/students/{id}', [StudentController::class, 'show'])->middleware('auth:sanctum');
+Route::post('/students/sort', [StudentController::class, 'sort']);
+
+// minggu 7
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
