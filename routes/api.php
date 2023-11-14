@@ -49,7 +49,7 @@ Route::post('/students', [StudentController::class, 'store'])->middleware('auth:
 Route::put('/students/{id}', [StudentController::class,'update'])->middleware('auth:sanctum');
 Route::delete('/students/{id}',[StudentController::class,'destroy'])->middleware('auth:sanctum');
 Route::get('/students/{id}', [StudentController::class, 'show'])->middleware('auth:sanctum');
-Route::post('/students/sort', [StudentController::class, 'sort']);
+Route::post('/students/sf', [StudentController::class, 'sort'])->middleware('auth:sanctum');//sf(sort and filter)
 
 // minggu 7
 Route::post('/register', [AuthController::class, 'register']);

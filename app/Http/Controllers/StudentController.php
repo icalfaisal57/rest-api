@@ -33,11 +33,11 @@ class StudentController extends Controller
     }
     public function sort(Request $request)
     {
-        $input = [
-            'sort' => $request
-        ];
+        $filter = $request->input('filter_by');//menangkap filter kolom yang diinginkan
+        $default = "asc"; //untuk mengatur default value di sort agar menjadi ascending
+        $sort = $request->input('sort_by')??$default;//menangkap asc atau desc
 
-        $students = Student::orderBy("")->get();
+        $students = Student::orderBy("$filter", "$sort")->get();
         $data=[
             'message'=> 'get students',
             'data'=> $students        
@@ -45,6 +45,8 @@ class StudentController extends Controller
         return response()->json($data, 201);
         // view('data.index', compact('filteredData'));
     }
+
+    
 
     /**
      * Store a newly created resource in storage.
